@@ -1,0 +1,58 @@
+services:
+  s1:
+    build:
+      context: ./C4
+      dockerfile: Dockerfile
+    container_name: S1
+    networks:
+      - sshlab
+    ports:
+      - "2222:22" 
+
+  c1:
+    build:
+      context: ./C1
+      dockerfile: Dockerfile
+    container_name: C1
+    networks:
+      - sshlab
+    depends_on:
+      - s1
+    command: sleep infinity  
+
+  c2:
+    build:
+      context: ./C2
+      dockerfile: Dockerfile
+    container_name: C2
+    networks:
+      - sshlab
+    depends_on:
+      - s1
+    command: sleep infinity
+
+  c3:
+    build:
+      context: ./C3
+      dockerfile: Dockerfile
+    container_name: C3
+    networks:
+      - sshlab
+    depends_on:
+      - s1
+    command: sleep infinity
+
+  c4:
+    build:
+      context: ./C4
+      dockerfile: Dockerfile
+    container_name: C4
+    networks:
+      - sshlab
+    depends_on:
+      - s1
+    command: sleep infinity  # este actúa solo como cliente
+
+networks:
+  sshlab:
+    driver: bridge
